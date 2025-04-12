@@ -1,0 +1,16 @@
+fastapi
+uvicorn
+pydantic
+sqlalchemy
+psycopg2
+python-jose
+passlib
+loguru
+psycopg2-binary
+python-dotenv
+sqlalchemy
+fastapi
+uvicorn
+jose
+passlib
+dotenv

@@ -33,11 +33,28 @@ class WSGIApp:
             "raw_path": environ.get("PATH_INFO", "/").encode(),
             "query_string": environ.get("QUERY_STRING", "").encode(),
             "root_path": environ.get("SCRIPT_NAME", ""),
-            "headers": [(k.lower().encode(), v.encode()) for k, v in environ.items() 
-                         if k.startswith("HTTP_")],
             "client": (environ.get("REMOTE_ADDR", ""), int(environ.get("REMOTE_PORT", 0))),
             "server": (environ.get("SERVER_NAME", ""), int(environ.get("SERVER_PORT", 0))),
         }
+        
+        # Process headers
+        headers = []
+        for key, value in environ.items():
+            if key.startswith('HTTP_'):
+                header_name = key[5:].lower().replace('_', '-').encode()
+                header_value = value.encode()
+                headers.append((header_name, header_value))
+            elif key in ('CONTENT_TYPE', 'CONTENT_LENGTH'):
+                header_name = key.lower().replace('_', '-').encode()
+                header_value = value.encode()
+                headers.append((header_name, header_value))
+                
+        # Special handling for Authorization header
+        if 'HTTP_AUTHORIZATION' in environ:
+            auth_value = environ['HTTP_AUTHORIZATION'].encode()
+            headers.append((b'authorization', auth_value))
+            
+        scope['headers'] = headers
 
         # Simple WSGI response handling
         body = []

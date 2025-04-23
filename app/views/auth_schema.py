@@ -8,6 +8,8 @@ class UserBase(BaseModel):
 class UserCreate(UserBase):
     """Schema for user creation request"""
     password: str = Field(..., min_length=8)
+    is_active: bool = True
+    is_superuser: bool = False
     
     @validator('password')
     def password_complexity(cls, v):

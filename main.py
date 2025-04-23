@@ -96,4 +96,4 @@ app = WSGIApp(asgi_app)
 
 if __name__ == "__main__":
     # Run the application with uvicorn directly (for development)
-    uvicorn.run(asgi_app, host="0.0.0.0", port=5000, reload=True)
+    uvicorn.run("main:asgi_app", host="0.0.0.0", port=5000, reload=True)

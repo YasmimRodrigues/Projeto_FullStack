@@ -3,15 +3,7 @@ from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     # PostgreSQL database configuration
-    DATABASE_URL: str = os.environ.get("DATABASE_URL")
-    # If DATABASE_URL is not provided, construct it from individual credentials
-    if not DATABASE_URL:
-        PGUSER: str = os.environ.get("PGUSER", "postgres")
-        PGPASSWORD: str = os.environ.get("PGPASSWORD", "postgres")
-        PGHOST: str = os.environ.get("PGHOST", "localhost")
-        PGPORT: str = os.environ.get("PGPORT", "5432")
-        PGDATABASE: str = os.environ.get("PGDATABASE", "postgres")
-        DATABASE_URL = f"postgresql://{PGUSER}:{PGPASSWORD}@{PGHOST}:{PGPORT}/{PGDATABASE}"
+    DATABASE_URL: str = "postgresql://postgres:b2b6e2d0afa36e3adea8@marinho-backpython-pgweb.4oqjah.easypanel.host:5435/marinho?sslmode=disable"
     
     # JWT configuration
     JWT_SECRET_KEY: str = os.environ.get("JWT_SECRET_KEY", "your-secret-key")
